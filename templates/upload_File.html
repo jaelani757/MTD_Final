@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Event</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='upload-file.css') }}">
+</head>
+
+<div class="logo-above-button">
+    <a href="http://127.0.0.1:5000/">
+        <img src="static\assets\mtd.png" alt="mtd" class="img3">
+    </a>
+</div>
+    <div class="container">
+        <h2>FORM UPLOAD FILE</h2>
+        <form onsubmit="return upload('{{ editing }}');">
+            <label for="kategori">Kategori:</label>
+            <select id="kategori" name="kategori">
+                {% if file is not none %}
+                    {% if file.category == 'External' %}
+                        <option value="External" selected>External</option>
+                    {% else %}
+                        <option value="External">External</option>
+                    {% endif %}
+                    {% if file.category == 'Internal' %}
+                    <option value="Internal" selected>Internal</option>
+                    {% else %}
+                        <option value="Internal">Internal</option>
+                    {% endif %}
+                {% else %}
+                    <option value="External">External</option>
+                    <option value="Internal">Internal</option>
+                {% endif %}
+            </select>
+
+            <label for="tanggal">Tanggal:</label>
+            {% if file is not none %}
+            <input type="date" id="tanggal" name="tanggal" value="{{ file.date }}">
+            {% else %}
+            <input type="date" id="tanggal" name="tanggal" value="">
+            {% endif %}
+
+            <label for="event">Event:</label>
+            {% if file is not none %}
+            <input type="text" id="event" name="event" value="{{ file.event }}">
+            {% else %}
+            <input type="text" id="event" name="event">
+            {% endif %}
+
+            <label for="tag">Tag:</label>
+            {% if file is not none %}
+            <input type="text" id="tag" name="tag" value="{{ file.tag }}">
+            {% else %}
+            <input type="text" id="tag" name="tag">
+            {% endif %}
+
+            <label for="file">Choose File:</label>
+            <input type="file" id="fileInput" name="file" accept=".pptx, .pdf">
+            {% if file is not none %}
+            <div>{{ file.local_link }}</div><br>
+            {% endif %}
+
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</body>
+<a href="/upload" class="choose-file"><img src="../static/assets/file.png" alt="Upload Icon"></a>
+<a href="/files" class="choose-file"><img src="../static/assets/folder.png" alt="Upload Icon"></a>`
+<script>
+    const category = document.getElementById('kategori');
+    const date = document.getElementById('tanggal');
+    const event = document.getElementById('event');
+    const tag = document.getElementById('tag');
+    const fileInput = document.getElementById('fileInput');
+    
+    function upload(editing) {
+        editing = editing === 'True';
+
+        if (fileInput.files.length <= 0 && !editing) {
+            alert('File is required for upload');
+            return;
+        }
+
+        const confirmation = confirm('Are you sure you want to '.concat(editing ? 'edit' : 'upload').concat(' this file?'));
+        if (confirmation) {
+            const formData = new FormData();
+            formData.append('kategori', category.value);
+            formData.append('tanggal', date.value);
+            formData.append('event', event.value);
+            formData.append('tag', tag.value);
+            formData.append('file', fileInput.files[0] ?? null);
+            if (editing) {
+                formData.append('fileId', '{{ file.id }}');
+            }
+
+            try {
+                const response = fetch(editing ? '/edit' : '/upload', {
+                    method: 'POST',
+                    body: formData
+                }).then((value) => {
+                    if (value.ok) {
+                        alert('File successfully '.concat(editing ? 'edited' : 'uploaded'));
+                        window.location.href = '/files';
+                    } else {
+                        alert('Failed to '.concat(editing ? 'edit' : 'upload').concat(' file'));
+                    }
+
+                    if (!editing) {
+                        category.value = '';
+                        date.value = '';
+                        event.value = '';
+                        tag.value = '';
+                        fileInput.value = ''; // Clear file input
+                    }
+                });
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred while '.concat(editing ? 'editing' : 'upload').concat(' file'));
+            }
+        }
+
+        return false;
+    };
+</script>
+</html>

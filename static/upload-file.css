@@ -1,0 +1,113 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+
+body {
+    background-image: url('../static/assets/bg.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    justify-content: center; /* Pusatkan konten secara horizontal */
+    align-items: center; /* Pusatkan konten secara vertikal */
+    min-height: 100vh; /* Menggunakan tinggi minimum untuk konten */
+}
+
+.navbar {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 20px;
+    background-color: #fffcfc4d;
+}
+
+.container {
+    max-width: 300px; /* Mengurangi lebar container */
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 75px; /* Menambahkan margin atas */
+}
+
+
+label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+    font-size: 14px; /* Menyesuaikan ukuran teks label */
+}
+
+input, select, button {
+    width: 100%;
+    padding: 8px; /* Mengurangi padding untuk ukuran teks yang lebih kecil */
+    border: 1px solid #ccc;
+    border-radius: 6px; /* Mengurangi border-radius */
+    margin-bottom: 8px; /* Mengurangi jarak antar elemen */
+    box-sizing: border-box;
+    font-size: 14px; /* Menyesuaikan ukuran teks input */
+}
+
+button {
+    background-color: #ff0000;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.img3 {
+    width: 100px; /* Mengurangi ukuran gambar */
+    height: auto;
+    border-radius: 10px; /* Mengurangi border-radius */
+    position: absolute; /* Menjadikan posisi absolut */
+    top: 45px; /* Menentukan jarak dari atas */
+    left: 50%; /* Menjadikan posisi di tengah */
+    transform: translateX(-50%); /* Menyesuaikan posisi horizontal ke tengah */
+    /* box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); Menambahkan bayangan */
+}
+
+
+
+h2 {
+    text-align: center;
+    font-size: 20px; /* Menyesuaikan ukuran teks h2 */
+    margin-bottom: 10px; /* Mengurangi jarak bawah */
+    margin-top: 0; /* Menambahkan margin atas */
+    padding-bottom: 10px; /* Menambahkan ruang di bawah judul */
+    border-bottom: 1px solid #ccc; /* Menambahkan garis bawah */
+}
+
+body::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(51, 50, 50, 0.7); /* Ubah opasitas sesuai kebutuhan */
+    z-index: -1; /* Letakkan di belakang konten lainnya */
+    filter: blur(5px);
+}
+/* tombol upload */
+.choose-file img {
+    display: inline-block;
+    /* background-color: #4a6637; */
+    /* color: #fff; */
+    padding: 3px;
+    /* border-radius: 50px; */
+    cursor: pointer;
+    position: fixed; /* Tetapkan posisi elemen */
+    bottom: 0; /* Letakkan di bagian bawah */
+    left: 0; /* Letakkan di bagian kiri */
+    margin-bottom: 20px; /* Atur jarak dari bawah */
+    margin-left: 20px; /* Atur jarak dari kiri */
+    width: 40px;
+    height: 40px;
+}

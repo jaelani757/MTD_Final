@@ -1,0 +1,246 @@
+
+html, body {
+    height: 100%; /* Mengatur tinggi html dan body menjadi 100% */
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+
+body {
+    background-image: url('../static/assets/bg.png');
+    background-repeat: no-repeat;
+    background-size: cover; /* Menjadikan gambar background mencakup seluruh halaman */
+    
+}
+.navbar {
+    display: flex;
+    justify-content: flex-start; /* Logo akan berada di sebelah kiri halaman */
+    align-items: center;
+    padding: 15px; /* Atur padding navbar sesuai kebutuhan */
+    background-color: #fffcfc4d;
+
+}
+/* Tambahkan aturan CSS untuk overlay */
+body::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(51, 50, 50, 0.7); /* Ubah opasitas sesuai kebutuhan */
+    z-index: -1; /* Letakkan di belakang konten lainnya */
+    filter: blur(5px);
+}
+
+.box {
+    position: absolute;
+    top: 20px; /* Atur jarak dari atas */
+    left: 50%; /* Pusatkan horizontal */
+    transform: translateX(-50%); /* Pusatkan horizontal */
+    width: 500px;
+    /* background-color: rgba(255, 255, 255, 0.8); Atur opasitas dan warna latar belakang */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Tambahkan bayangan */
+    z-index: 1; /* Atur tumpukan di atas tabel hasil */
+}
+
+.hasil {
+    width: 80%;
+    margin: 50px auto 50px; /* Atur margin atas agar tidak bertabrakan dengan kotak pencarian */
+    border-collapse: collapse;
+    background-color: #ecf0f1;
+    border: 1px solid #ddd;
+    position: relative; /* Atur posisi relatif */
+    z-index: 0; /* Atur tumpukan di bawah kotak pencarian */
+}
+
+    
+    input {
+        position: absolute;
+        display: inline-block;
+        font-size: 18px;
+        box-sizing: border-box;
+        transition: .5s;
+        width: 200px;
+        height: 50px;
+        padding: 0 25px;
+        border-radius: 25px 0 0 25px;
+        background-color: #ffffff;
+        border: none;
+        outline: none;
+        left: 120%;
+        top: 1.5px;
+    }
+.hasil {
+            width: 100%;
+            max-width: 80%; /* Lebar maksimum tabel */
+            margin: auto; /* Pusatkan tabel */
+            border-collapse: collapse; /* Menghapus jarak antar border sel */
+            background-color: #f8f8f8; /* Warna latar tabel */
+            /* table-layout: fixed; Mengatur tata letak tabel agar kolom memiliki lebar tetap */
+            top: 30px;
+        }
+        
+        .hasil th, .hasil td {
+            border: 1px solid #ddd;
+            padding: 6px; /* Padding yang sedikit lebih besar untuk kenyamanan pengguna */
+            text-align: left;
+            overflow: hidden; /* Menyembunyikan teks yang melebihi lebar kolom */
+            white-space: nowrap; /* Mencegah teks untuk membungkus ke baris berikutnya */
+            text-overflow: ellipsis; /* Menambahkan elipsis jika teks terlalu panjang */
+        }
+        
+        .hasil th {
+            background-color: #b92929; /* Warna latar header tabel */
+            color: white;
+        }
+        
+        .hasil td, .hasil th {
+            width: 50%; /* Contoh, setel lebar kolom sesuai kebutuhan */
+        }
+        
+        .hasil a {
+            text-decoration: none;
+            color: #b92929; /* Warna tautan */
+            font-weight: bold;
+        }
+        
+        .hasil a:hover {
+            text-decoration: underline;
+        }
+        
+        .hasil caption {
+            font-size: 14px; /* Ukuran font yang lebih besar untuk kenyamanan */
+            margin-bottom: 10px;
+            color: #333; /* Warna teks judul tabel */
+            text-align: left;
+        }
+    
+    .submit-button {
+        position: absolute;
+        left: 155%;
+        top: 1.5px;
+        width: 50px;
+        height: 50px;
+        border-radius: 0 25px 25px 0;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        background: #ffffff;
+    }
+    
+    .submit-button:hover {
+        background: hsl(0, 100%, 50%);
+    }
+    
+    .img1 {
+        width: 175px; /* Sesuaikan ukuran logo sesuai kebutuhan */
+        height: auto;
+        border-radius: 15px;
+        margin-right: 20px; /* Menambahkan jarak antara logo */
+    }
+    
+    .img2 {
+        width: 70px; /* Sesuaikan ukuran logo sesuai kebutuhan */
+        height: auto;
+        border-radius: 20px;
+        margin-right: 20px; /* Menambahkan jarak antara logo */
+    }
+    .img3 {
+        width: 70px; /* Sesuaikan ukuran logo sesuai kebutuhan */
+        height: auto;
+        border-radius: 15px;
+        margin-right: 20px; /* Menambahkan jarak antara logo */
+    }
+        .hasil th, .hasil td {
+            border: 1px solid #ddd;
+            padding: 3px;
+            text-align: left;
+        }
+        .hasil th {
+            background-color: #b92929; /* Warna latar header tabel */
+            color: white;
+        }
+        /* .hasil tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        .hasil tr:hover {
+            background-color: #ddd;
+        } */
+        .hasil a {
+            text-decoration: none;
+            color: #b92929; /* Warna tautan */
+            font-weight: bold;
+        }
+        .hasil a:hover {
+            text-decoration: underline;
+        }
+        .hasil caption {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: #ffffff; /* Warna teks judul tabel */
+            text-align: left;
+        }
+        .no-results {
+            text-align: center;
+            font-style: italic;
+            color: #ffffff;
+            margin-top: 50px;
+            font-size: 20px;
+            text-decoration: underline;
+        }
+
+.page-items {
+    margin-bottom: 5px;
+    color: white;
+}
+
+.pagination-container {
+  text-align: center;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding-bottom: 15px;
+}
+
+.pagination {
+  display: inline-block;
+}
+
+.pagination a {
+  color: black;
+  background-color: white;
+  float: left;
+  padding: 8px 10px;
+  text-decoration: none;
+  transition: background-color .3s;
+  border: 1px solid #ddd;
+}
+
+.pagination a.active {
+  background-color: #e62b2b;
+  color: white;
+  border: 1px solid #e62b2b;
+}
+
+.pagination a:hover:not(.active) {background-color: #ddd;}
+
+#date-header {
+    cursor: pointer;
+}
+.choose-file img {
+    display: inline-block;
+    /* background-color: #4a6637; */
+    /* color: #fff; */
+    /* padding: 10px 20px; */
+    /* border-radius: 50px; */
+    cursor: pointer;
+    margin-top: 5px;
+    margin-left: 5px;
+    width: 40px;
+    height: 40px;
+    pointer-events: auto;
+}

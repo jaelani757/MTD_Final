@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MTD Search Engine</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+    <div class="navbar">
+        <!-- <label for="fileInput" class="img-4"><img src="../static/assets/add-icon.png" alt="Upload Icon"></label>
+        <input type="file" id="fileInput" name="file" accept=".pptx, .pdf" style="display: none;"> -->
+            <a href="https://defend.id/">
+                <img src="static\assets\defendid.png" alt="logo-mtd" class="img1">
+            </a>
+            
+            <a href="https://www.len.co.id/">
+                <img src="static\assets\len.png" alt="logo-len" class="img2">
+            </a>
+        <div class="logo-above-button">
+            <img src="static\assets\mtd.png" alt="mtd" class="img3">
+        </div>
+    </div>
+    <div class="box">
+        <form onsubmit="return search()">
+            <input type="text" id="keyword" name="keyword" placeholder="Enter keyword..." required>
+            <button type="submit">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                    <path fill="none" d="M0 0h24v24H0z"/>
+                    <path d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                </svg>
+            </button>
+        </form>
+    </div>
+</body>
+
+<div class="container">
+    <a href="/upload" class="choose-file">
+        <img src="../static/assets/file.png" alt="Upload Icon">Upload File
+    </a>
+    <a href="/files" class="choose-file">
+        <img src="../static/assets/folder.png" alt="Upload Icon">Open Folder
+    </a>
+</div>
+
+
+<script>
+    function search() {
+        const keywordInput = document.getElementById("keyword");
+
+        const currentUrl = new URL(window.location);
+        const newUrl = new URL(location.origin + "/search");
+
+        newUrl.searchParams.append("keyword", keywordInput.value);
+        window.location.replace(newUrl);
+
+        return false;
+    }
+</script>
+</html>

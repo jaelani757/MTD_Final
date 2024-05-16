@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title> MTD Seacrh Engine</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='results-page.css') }}">
+</head>
+<body>
+    <div class="navbar">
+        <a href="https://defend.id/">
+            <img src="static\assets\defendid.png" alt="logo-mtd" class="img1">
+        </a>
+        
+        <a href="https://www.len.co.id/">
+            <img src="static\assets\len.png" alt="logo-len" class="img2">
+        </a>
+        
+        <a href="http://127.0.0.1:8000/">
+            <img src="static\assets\mtd.png" alt="mtd" class="img3">
+        </a>
+        
+        </div>
+    </div>
+    <div class="box">
+        <form onsubmit="return searchKeyword(null)">
+            {% if mode == 'files' %}
+                <input type="text" id="keyword" name="keyword" placeholder="Enter tag..." required>
+            {% else %}
+                <input type="text" id="keyword" name="keyword" placeholder="Enter keyword..." required>
+            {% endif %}
+            <button type="submit" class="submit-button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                    <path fill="none" d="M0 0h24v24H0z"/>
+                    <path d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                </svg>
+            </button>
+        </form>
+    </div>
+
+    {% if results.items %}
+    <table class="hasil">
+        <caption>Search Results for "{{ keyword }}"</caption>
+        <tr>
+            <th>Title</th>
+            {% if mode == 'files' %}
+                <th>Tag</th>
+                <th>Category</th>
+                <th>Date</th>
+                <th>Event</th>
+            {% else %}
+                <th>Page Number</th>
+            {% endif %}
+            <th>Open File</th>
+        </tr>
+        {% set displayed_entries = [] %}
+        {% for result in results %}
+            {% if entry not in displayed_entries %}
+                <tr>
+                    {% if mode == 'files' %}
+                        <td>{{ result.title }}</td>
+                        <td>{{ result.tag }}</td>
+                    {% else %}
+                        <td>{{ result.file.title }}</td>
+                    {% endif %}
+                    {% if mode == 'files' %}
+                        <td>{{ result.category }}</td>
+                        <td>{{ result.date }}</td>
+                        <td>{{ result.event }}</td>
+                    {% else %}
+                        <td>{{ result.page_number }}</td>
+                    {% endif %}
+                    {% if mode == 'files' %}
+                    <td><a href="{{ url_for('static', filename=result.local_link) }}">View File</a></td>
+                    {% else %}
+                    <td><a href="{{ url_for('static', filename=result.file.local_link) }}">View File</a></td>
+                    {% endif %}
+                </tr>
+            {% endif %}
+        {% endfor %}
+    </table>
+    <div class="pagination-container">
+        <a href="/upload" class="choose-file"><img src="../static/assets/file.png" alt="Upload Icon"></a>
+        <a href="/files" class="choose-file"><img src="../static/assets/folder.png" alt="Upload Icon"></a>
+        <div class=page-items>
+            {{ results.first }} - {{ results.last }} of {{ results.total }}
+        </div>
+        <div class="pagination">
+            {% for page in results.iter_pages() %}
+                {% if page %}
+                    {% if page != results.page %}
+                        <a href="#" onclick="searchKeyword('{{ page }}')">{{ page }}</a>
+                    {% else %}
+                        <a class="active">{{ page }}</a>
+                    {% endif %}
+                {% else %}
+                    <a class=ellipsis>…</a>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+    {% else %}
+    <p class="no-results">No results found for "{{ keyword }}"</p>
+    {% endif %}
+</body>
+<script>
+    function searchKeyword(page) {
+        const keywordField = document.getElementById("keyword");
+
+        const currentUrl = new URL(window.location);
+        const newUrl = new URL(location.origin + "/search");
+
+        let keywordInput = currentUrl.searchParams.get("keyword");
+        const mode = currentUrl.searchParams.get("mode");
+
+        if (!keywordInput || keywordField.value) {
+            keywordInput = keywordField.value;
+        }
+        if (mode) {
+            newUrl.searchParams.append("mode", mode);
+        }
+        if (page) {
+            newUrl.searchParams.append("page", page);
+        }
+
+        newUrl.searchParams.append("keyword", keywordInput);
+        window.location.replace(newUrl);
+
+        return false;
+    }
+</script>
+</html>

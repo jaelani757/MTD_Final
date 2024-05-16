@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title> MTD Seacrh Engine</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='files-results.css') }}">
+</head>
+<body>
+    <div class="navbar">
+        <a href="https://defend.id/">
+            <img src="static\assets\defendid.png" alt="logo-mtd" class="img1">
+        </a>
+        
+        <a href="https://www.len.co.id/">
+            <img src="static\assets\len.png" alt="logo-len" class="img2">
+        </a>
+        
+        <a href="http://127.0.0.1:5000/">
+            <img src="static\assets\mtd.png" alt="mtd" class="img3">
+        </a>
+        </div>
+    </div>
+    <div class="box">
+        <form onsubmit="return search()">
+            <input type="text" id="keyword" name="keyword" placeholder="Enter Tag..." required>
+            <button type="submit" class="submit-button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                    <path fill="none" d="M0 0h24v24H0z"/>
+                    <path d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                </svg>
+            </button>
+        </form>
+    </div>
+    <table class="hasil">
+        <tr>
+            <th>Title</th>
+            <th>Category</th>
+            <th id="date-header" onclick="toggleSortByDate()">Date</th>
+            <th>Event</th>
+            <th>Tag</th>
+            <th>Edit</th>
+            <th>Delete</th>
+            <th>Open File</th>
+        </tr>
+        {% set ascending = sort == 'asc' %}
+        {% for file in paginated_files|sort(attribute='date', reverse=ascending) %}
+        <tr>
+            <td>{{ file.title }}</td>
+            <td>{{ file.category }}</td>
+            <td>{{ file.date }}</td>
+            <td>{{ file.event }}</td>
+            <td>{{ file.tag }}</td>
+            <td><a href="/edit?id={{ file.id }}">Edit</a></td>
+            <td><a href="#" onclick="deleteFile('{{ file.id }}')">Delete</a></td>
+            <td><a href="{{ url_for('static', filename=file.local_link) }}">View File</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+    <div class="pagination-container">
+        <a href="/upload" class="choose-file"><img src="../static/assets/file.png" alt="Upload Icon"></a>
+        <a href="/files" class="choose-file"><img src="../static/assets/folder.png" alt="Upload Icon"></a>
+        <div class=page-items>
+            {{ paginated_files.first }} - {{ paginated_files.last }} of {{ paginated_files.total }}
+        </div>
+        <div class="pagination">
+            {% for page in paginated_files.iter_pages() %}
+                {% if page %}
+                    {% if page != paginated_files.page %}
+                        <a href="{{ url_for('files', page=page) }}">{{ page }}</a>
+                    {% else %}
+                        <a class="active">{{ page }}</a>
+                    {% endif %}
+                {% else %}
+                    <a class=ellipsis>…</a>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+</body>
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+        const dateSort = document.getElementById('date-header');
+
+        const currentUrl = new URL(window.location);
+        const sort = currentUrl.searchParams.get('sort');
+
+        if (sort == 'asc') {
+            dateSort.textContent = 'Date ▴';
+        } else {
+            dateSort.textContent = 'Date ▾';
+        }
+    });
+
+    function deleteFile(id) {
+        const confirmation = confirm('Are you sure you want to delete this file?');
+        if (confirmation) {
+            const response = fetch('/delete?id=' + id, {
+                method: 'GET'
+            }).then((value) => {
+                if (value.ok) {
+                    alert('File successfully deleted');
+                    location.reload();
+                } else {
+                    alert('Failed to delete file');
+                }
+            });
+        }
+    }
+
+    function toggleSortByDate() {
+        const dateSort = document.getElementById('date-header');
+
+        const currentUrl = new URL(window.location);
+        const sort = currentUrl.searchParams.get('sort');
+        const page = currentUrl.searchParams.get('page');
+        console.log(location.origin);
+        const newUrl = new URL(window.location.origin + "/files");
+
+        if (page) {
+            newUrl.searchParams.append("page", page);
+        }
+
+        if (sort == 'asc') {
+            newUrl.searchParams.append("sort", "desc");
+        } else {
+            newUrl.searchParams.append("sort", "asc");
+        }
+
+        window.location.replace(newUrl);
+    }
+
+    function search() {
+        const keywordInput = document.getElementById("keyword");
+
+        const currentUrl = new URL(window.location);
+        const newUrl = new URL(location.origin + "/search");
+
+        newUrl.searchParams.append("mode", "files");
+        newUrl.searchParams.append("keyword", keywordInput.value);
+        window.location.replace(newUrl);
+
+        return false;
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        var judulCells = document.querySelectorAll('.hasil .title');
+
+        judulCells.forEach(function(cell) {
+            var text = cell.textContent;
+            if (text.length > 30) {
+                cell.textContent = text.substring(0, 30) + '...';
+            }
+        });
+    });
+</script>
+</html>

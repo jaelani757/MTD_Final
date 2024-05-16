@@ -1,0 +1,135 @@
+html, body {
+    height: 100%; /* Mengatur tinggi html dan body menjadi 100% */
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+
+body {
+    background-image: url('../static/assets/bg.png');
+    background-repeat: no-repeat;
+    background-size: cover;    
+}
+
+/* Tambahkan aturan CSS untuk overlay */
+body::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(51, 50, 50, 0.7); /* Ubah opasitas sesuai kebutuhan */
+    z-index: -1; /* Letakkan di belakang konten lainnya */
+    filter: blur(5px);
+}
+
+/* Selector lainnya tetap sama */
+.logo-above-button {
+    position: absolute;
+    top: 50%;
+    left: 48%; /* Sesuaikan dengan posisi yang diinginkan */
+    transform: translate(-50%, -50%);
+}
+
+.img3 {
+    width: 170px; /* Sesuaikan ukuran logo sesuai kebutuhan */
+    height: auto;
+    border-radius: 15px;
+    margin-bottom: 110px; /* Jarak antara logo dan tombol */
+}
+
+.navbar {
+    display: flex;
+    justify-content: flex-start; /* Logo akan berada di sebelah kiri halaman */
+    align-items: center;
+    padding: 20px; /* Atur padding navbar sesuai kebutuhan */
+     /* background-color: #fffcfc4d; */
+}
+
+.box {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 500px;
+    transform: translate(-50%, -50%);
+}
+
+input {
+    position: absolute;
+    display: inline-block;
+    font-size: 18px;
+    box-sizing: border-box;
+    transition: .5s;
+    width: 340px;
+    height: 50px;
+    padding: 0 25px;
+    border-radius: 25px 0 0 25px;
+    background-color: #fafafa;
+    border: none;
+    outline: none;
+}
+
+button[type="submit"] {
+    position: absolute;
+    left: 315px;
+    top: 0;
+    width: 150px;
+    height: 50px;
+    border-radius: 0 25px 25px 0;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    background: #fff;
+}
+
+button[type="submit"]:hover {
+    background: hsl(0, 100%, 50%);
+}
+
+.img1 {
+    width: 175px; /* Sesuaikan ukuran logo sesuai kebutuhan */
+    height: auto;
+    border-radius: 15px;
+    margin-right: 20px; /* Menambahkan jarak antara logo */
+}
+
+.img2 {
+    width: 100px; /* Sesuaikan ukuran logo sesuai kebutuhan */
+    height: auto;
+    border-radius: 15px;
+    margin-right: 20px; /* Menambahkan jarak antara logo */
+}
+
+/* tombol upload */
+.container {
+    text-align: left;
+    margin-top: 31%;
+}
+
+.choose-file {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    color: white;
+    background-color: #535751; /* Warna latar belakang tombol */
+    padding: 5px 5px;
+    border-radius: 5px;
+    margin: 5px;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.choose-file:hover {
+    background-color: #365028; /* Warna latar belakang saat di-hover */
+}
+
+.choose-file img {
+    margin-right: 8px;
+    width: 40px;
+    height: 40px;
+}
+
+.choose-file span {
+    color: white; /* Warna teks */
+}
